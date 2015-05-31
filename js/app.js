@@ -1,11 +1,12 @@
 $(document).ready(function(){
 
-  //declare count in order to replace #count in HTML
-  var count = 0;
-  var differenceTracker = [];
-    
+  //declare variable
 
-	
+  function variableDeclare(){
+    differenceTracker = [];
+  }
+  
+  
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
     	$(".overlay").fadeIn(1000);
@@ -18,15 +19,13 @@ $(document).ready(function(){
 
     //start a new game
   	var newGame = function(){
-
       //computer generates random number
       function generateRandomNumber() {
         var randomNumber = Math.floor((Math.random() * 100) + 1);
         return randomNumber;
       } 
       
-      var computerInt = generateRandomNumber();
-      return computerInt;
+      return generateRandomNumber();
   	}
 
     //grab user's input
@@ -51,20 +50,15 @@ $(document).ready(function(){
 
       if (inputChecker) {
         $('#guessList').append('<li>'+userNumber+'</li>');
-        count += 1;
-        $('#count').replaceWith("<span id='count'>" + count + "</span>");
         var currentDifference = hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
         differenceTracker.push(currentDifference);
         var previousDifference = differenceTracker[differenceTracker.length - 2];
+        $('#count').replaceWith("<span id='count'>" + differenceTracker.length + "</span>");
       }
       else{
         window.alert('It looks like your input is invalid. Please enter a whole number between 1-100');
         return false;
       }
-
-      console.log(previousDifference);
-      console.log(currentDifference);
-      console.log(differenceTracker);
 
       //compare user and computer numbers
       function hotOrCold(number1, number2) {  
@@ -74,7 +68,7 @@ $(document).ready(function(){
           window.alert("You got it!  Well done.  Click 'New Game' to play again");
           return difference;
         }
-        else if (count > 1){
+        else if (differenceTracker.length > 0){
           return difference;
         }
         else{
@@ -108,22 +102,15 @@ $(document).ready(function(){
 
     //creates new game when page loads
     var computerInt = newGame();
-    console.log(computerInt);
+    variableDeclare();
 
     //creates new game when user clicks new game button
     $('.new').click(function(){
-      
       var computerInt = newGame();
-      console.log(computerInt);
-      
-      var differenceTracker = [];
-      console.log(differenceTracker);
-
-      var count = 0;
-
+      variableDeclare();
       $('#guessList li').remove();
+      $('#count').replaceWith("<span id='count'>" + differenceTracker.length + "</span>");
     });
-
 
 });
 
