@@ -22,6 +22,7 @@ $(document).ready(function(){
       //computer generates random number
       function generateRandomNumber() {
         var randomNumber = Math.floor((Math.random() * 100) + 1);
+        console.log(randomNumber);
         return randomNumber;
       } 
       
@@ -56,7 +57,7 @@ $(document).ready(function(){
         $('#count').replaceWith("<span id='count'>" + differenceTracker.length + "</span>");
       }
       else{
-        window.alert('It looks like your input is invalid. Please enter a whole number between 1-100');
+        $('#feedback').replaceWith("<h2 id='feedback'>"+'It looks like your input is invalid. Please enter a whole number between 1-100'+"</h2>");
         return false;
       }
 
@@ -65,14 +66,14 @@ $(document).ready(function(){
         var difference = Math.abs(number1 - number2);
 
         if (difference == 0) {
-          window.alert("You got it!  Well done.  Click 'New Game' to play again");
+          $('#feedback').replaceWith("<h2 id='feedback'>"+ "You got it!  Well done.  Click 'New Game' to play again" + "</h2>");
           return difference;
         }
         else if (differenceTracker.length > 0){
           return difference;
         }
         else{
-          window.alert('Keep guessing and I will tell if you are hotter or colder.');
+          $('#feedback').replaceWith("<h2 id='feedback'>"+ 'Keep guessing and I will tell if you are hotter or colder.' + "</h2>");
           return difference;
         }
         
@@ -81,10 +82,10 @@ $(document).ready(function(){
       //give user feedback if their guess was hotter or colder
       function hotterOrColder(currentValue, previousValue) {
         if (currentValue < previousValue) {
-          window.alert('Hotter');
+          $('#feedback').replaceWith("<h2 id='feedback'>"+'Hotter'+"</h2>");
         }
         else {
-          window.alert('Colder');
+          $('#feedback').replaceWith("<h2 id='feedback'>"+'Colder'+"</h2>");
           }
       }
 
@@ -101,15 +102,16 @@ $(document).ready(function(){
     });
 
     //creates new game when page loads
-    var computerInt = newGame();
+    computerInt = newGame();
     variableDeclare();
 
     //creates new game when user clicks new game button
     $('.new').click(function(){
-      var computerInt = newGame();
+      computerInt = newGame();
       variableDeclare();
       $('#guessList li').remove();
       $('#count').replaceWith("<span id='count'>" + differenceTracker.length + "</span>");
+      $('#feedback').replaceWith("<h2 id='feedback'>"+ "Make Your Guess!" + "</h2>");
     });
 
 });
