@@ -34,11 +34,10 @@ $(document).ready(function(){
       //gather and parse user input
       var userInput = $('#userGuess').val();
       $('#userGuess').val('');
-      var userNumber = parseInt(userInput);
-      
+
       //test validity of user input
       function testInput() {
-        if (((userNumber < 1) || (userNumber > 100)) || isNaN(userNumber)){
+        if (((userInput < 1) || (userInput > 100)) || isNaN(userInput) || (userInput % 1 != 0)){
           return false;
         }
         else {
@@ -49,10 +48,10 @@ $(document).ready(function(){
       var inputChecker = testInput();
 
       if (inputChecker) {
-        $('#guessList').append('<li>'+userNumber+'</li>');
+        $('#guessList').append('<li>'+userInput+'</li>');
 
         //runs hotOrCold funciton if user has inputted valid number
-        var currentDifference = hotOrCold(computerInt, userNumber);
+        var currentDifference = hotOrCold(computerInt, userInput);
 
         //create array to provide user feedback on guesses
         differenceTracker.push(currentDifference);
