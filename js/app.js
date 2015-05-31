@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   //declare count in order to replace #count in HTML
   var count = 0;
+  var differenceTracker = [];
     
 
 	
@@ -52,26 +53,52 @@ $(document).ready(function(){
         $('#guessList').append('<li>'+userNumber+'</li>');
         count += 1;
         $('#count').replaceWith("<span id='count'>" + count + "</span>");
-        hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
+        var currentDifference = hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
+        differenceTracker.push(currentDifference);
+        var previousDifference = differenceTracker[differenceTracker.length - 2];
       }
       else{
         window.alert('It looks like your input is invalid. Please enter a whole number between 1-100');
         return false;
       }
 
+      console.log(previousDifference);
+      console.log(currentDifference);
+      console.log(differenceTracker);
+
       //compare user and computer numbers
       function hotOrCold(number1, number2) {  
-
         var difference = Math.abs(number1 - number2);
 
-        if (difference >= 50) {window.alert("ice cold");}
-        else if (40 <= difference && difference < 50) {window.alert("cold");}
-        else if (30 <= difference && difference < 40) {window.alert("lukewarm");}
-        else if (20 <= difference && difference < 30) {window.alert("warm");}
-        else if (10 <= difference && difference < 20) {window.alert("hot");}
-        else if (1 <= difference && difference < 10) {window.alert("on fire");}
-        else {window.alert("You guessed right! Congratulations.  Click 'New Game' to play again.");}
+        if (difference == 0) {
+          window.alert("You got it!  Well done.  Click 'New Game' to play again");
+          return difference;
+        }
+        else if (count > 1){
+          return difference;
+        }
+        else{
+          window.alert('Keep guessing and I will tell if you are hotter or colder.');
+          return difference;
+        }
+        
       }
+
+      //give user feedback if their guess was hotter or colder
+      function hotterOrColder(currentValue, previousValue) {
+        if (currentValue < previousValue) {
+          window.alert('Hotter');
+        }
+        else {
+          window.alert('Colder');
+          }
+      }
+
+      //makes sure hotterOrColder only runs once the user has guessed a second time
+      if (differenceTracker.length > 1 && currentDifference != 0) {
+        hotterOrColder(currentDifference, previousDifference);
+      }
+
     }
     
     $('form').submit(function(e){
@@ -79,7 +106,24 @@ $(document).ready(function(){
       getUserNumber();
     });
 
+    //creates new game when page loads
     var computerInt = newGame();
+    console.log(computerInt);
+
+    //creates new game when user clicks new game button
+    $('.new').click(function(){
+      
+      var computerInt = newGame();
+      console.log(computerInt);
+      
+      var differenceTracker = [];
+      console.log(differenceTracker);
+
+      var count = 0;
+
+      $('#guessList li').remove();
+    });
+
 
 });
 
