@@ -27,7 +27,7 @@ $(document).ready(function(){
     console.log(computerInt);
 
     //grab user's input
-    var getUserNumber = function(randomInt){
+    var getUserNumber = function(){
       
       //gather and parse user input
       var userInput = $('#userGuess').val();
@@ -37,7 +37,7 @@ $(document).ready(function(){
       //test user's input
       function testInput() {
         if ((userNumber < 1) || (userNumber > 100)){
-         return false;
+          return false;
         }
         else {
           return true;
@@ -47,24 +47,27 @@ $(document).ready(function(){
       var inputChecker = testInput();
       if (inputChecker) {
         $('#guessList').append('<li>'+userNumber+'</li>');
+        hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
       }
       else{
         window.alert('It looks like your input is invalid. Please enter a whole number between 1-100');
+        return false;
       }
 
       //compare user and computer numbers
-      var hotOrCold = function(number1, number2) {
+      function hotOrCold(number1, number2) {  
         var difference = Math.abs(number1 - number2);
-
-        if (difference >= 50) {window.alert("You're ice cold.");}
-        if (40 <= difference < 50) {window.alert("You're cold, but not freezing.");}
-        if (30 <= difference < 40) {window.alert("You're thawed out.");}
-        if (20 <= difference < 30) {window.alert("You're around 70 degrees right now.  Better give it another shot.");}
-        if (10 <= difference < 20) {window.alert("You better grab some water, it's gettin' hot.");}
-        if (difference < 10) {window.alert("You're hot to the touch!  So close!");}
-    }
-      hotOrCold()
-      //return +($("#guessList li:last-child").text());
+        console.log(number1);
+        console.log(number2);
+        console.log(difference);
+        if (difference >= 50) {window.alert("ice cold");}
+        else if (40 <= difference && difference < 50) {window.alert("cold");}
+        else if (30 <= difference && difference < 40) {window.alert("lukewarm");}
+        else if (20 <= difference && difference < 30) {window.alert("warm");}
+        else if (10 <= difference && difference < 20) {window.alert("hot");}
+        else if (1 <= difference && difference < 10) {window.alert("on fire");}
+        else {window.alert("You guessed right! Congratulations.  Click 'New Game' to play again.");}
+      }
     }
     
     $('form').submit(function(e){
