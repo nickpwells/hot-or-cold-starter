@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
   //declare variable
-
   function variableDeclare(){
     differenceTracker = [];
   }
@@ -19,10 +18,10 @@ $(document).ready(function(){
 
     //start a new game
   	var newGame = function(){
+      
       //computer generates random number
       function generateRandomNumber() {
         var randomNumber = Math.floor((Math.random() * 100) + 1);
-        console.log(randomNumber);
         return randomNumber;
       } 
       
@@ -37,7 +36,7 @@ $(document).ready(function(){
       $('#userGuess').val('');
       var userNumber = parseInt(userInput);
       
-      //test user's input
+      //test validity of user input
       function testInput() {
         if (((userNumber < 1) || (userNumber > 100)) || isNaN(userNumber)){
           return false;
@@ -51,9 +50,14 @@ $(document).ready(function(){
 
       if (inputChecker) {
         $('#guessList').append('<li>'+userNumber+'</li>');
-        var currentDifference = hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
+
+        //runs hotOrCold funciton if user has inputted valid number
+        var currentDifference = hotOrCold(computerInt, userNumber);
+
+        //create array to provide user feedback on guesses
         differenceTracker.push(currentDifference);
         var previousDifference = differenceTracker[differenceTracker.length - 2];
+
         $('#count').replaceWith("<span id='count'>" + differenceTracker.length + "</span>");
       }
       else{
