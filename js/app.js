@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+  //declare count in order to replace #count in HTML
+  var count = 0;
+    
+
 	
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
@@ -23,20 +28,17 @@ $(document).ready(function(){
       return computerInt;
   	}
 
-    var computerInt = newGame();
-    console.log(computerInt);
-
     //grab user's input
     var getUserNumber = function(){
       
       //gather and parse user input
       var userInput = $('#userGuess').val();
       $('#userGuess').val('');
-      var userNumber = +(parseInt(userInput));
+      var userNumber = parseInt(userInput);
       
       //test user's input
       function testInput() {
-        if ((userNumber < 1) || (userNumber > 100)){
+        if (((userNumber < 1) || (userNumber > 100)) || isNaN(userNumber)){
           return false;
         }
         else {
@@ -45,8 +47,11 @@ $(document).ready(function(){
       }
 
       var inputChecker = testInput();
+
       if (inputChecker) {
         $('#guessList').append('<li>'+userNumber+'</li>');
+        count += 1;
+        $('#count').replaceWith("<span id='count'>" + count + "</span>");
         hotOrCold(computerInt, userNumber);//makes sure to run hotOrCold only when input is valid
       }
       else{
@@ -56,10 +61,9 @@ $(document).ready(function(){
 
       //compare user and computer numbers
       function hotOrCold(number1, number2) {  
+
         var difference = Math.abs(number1 - number2);
-        console.log(number1);
-        console.log(number2);
-        console.log(difference);
+
         if (difference >= 50) {window.alert("ice cold");}
         else if (40 <= difference && difference < 50) {window.alert("cold");}
         else if (30 <= difference && difference < 40) {window.alert("lukewarm");}
@@ -74,6 +78,8 @@ $(document).ready(function(){
       e.preventDefault();
       getUserNumber();
     });
+
+    var computerInt = newGame();
 
 });
 
